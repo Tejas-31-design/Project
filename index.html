@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepAI Engineering Master - Professional AI Learning & Interview Platform</title>
+  <meta name="description" content="Professional engineering education and AI interview preparation platform. Master technical subjects, algorithm challenges, aptitude speed runs, and speech delivery.">
+  
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- MathJax for Formula Notation -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body data-theme="light">
+
+  <div id="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar-container">
+      <div>
+        <div class="brand-logo">
+          <div class="brand-icon">🎓</div>
+          <div>
+            <div class="brand-title">PrepAI Master</div>
+            <div class="brand-subtitle">Engineering Platform</div>
+          </div>
+        </div>
+
+        <ul class="nav-menu">
+          <li class="nav-item active" data-view="dashboard">
+            <button id="nav-btn-dashboard">
+              <span class="nav-icon">📊</span>
+              <span class="nav-text">Dashboard</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="ai-teacher">
+            <button id="nav-btn-ai-teacher">
+              <span class="nav-icon">🤖</span>
+              <span class="nav-text">AI Engineering Teacher</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="interview">
+            <button id="nav-btn-interview">
+              <span class="nav-icon">🎙️</span>
+              <span class="nav-text">AI Interview Room</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="coding">
+            <button id="nav-btn-coding">
+              <span class="nav-icon">💻</span>
+              <span class="nav-text">Coding Sandbox</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="aptitude">
+            <button id="nav-btn-aptitude">
+              <span class="nav-icon">🧠</span>
+              <span class="nav-text">Aptitude Module</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="mock-test">
+            <button id="nav-btn-mock-test">
+              <span class="nav-icon">🎯</span>
+              <span class="nav-text">Placement Mock Test</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="comm">
+            <button id="nav-btn-comm">
+              <span class="nav-icon">🗣️</span>
+              <span class="nav-text">Speech Evaluator</span>
+            </button>
+          </li>
+          <li class="nav-item" data-view="reports">
+            <button id="nav-btn-reports">
+              <span class="nav-icon">📈</span>
+              <span class="nav-text">Analytics Report</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="user-badge" id="btn-open-candidate-profile" title="Click to Edit Candidate Profile" style="cursor: pointer;">
+        <div class="user-avatar" id="sidebar-user-avatar">JD</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebar-user-name">John Doe</span>
+          <span class="user-status"><span class="status-dot"></span> <span id="sidebar-user-role">Full Stack Engineer</span></span>
+        </div>
+        <span style="font-size: 0.85rem; margin-left: auto; opacity: 0.6;">⚙️</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 id="header-page-title">Dashboard Overview</h1>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-open-theme-modal" title="Customize Screen Color & Theme">
+            <span>🎨 Appearance</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-open-api-key">
+            <span>🔑 API Config</span>
+            <span class="badge badge-emerald" id="api-status-badge">Offline LLM Active</span>
+          </button>
+          <button class="btn btn-primary btn-sm" id="btn-quick-interview">
+            <span>🚀 Start Mock Interview</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View 1: Dashboard -->
+      <section class="view-container active" id="view-dashboard">
+        
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div class="hero-text">
+            <h2 id="dash-welcome-heading">Welcome Back! Accelerate Your Career with AI Interview Coaching</h2>
+            <p>Simulate realistic technical and behavioral interviews tailored to your candidate profile. Get real-time speech, code, and structural feedback to maximize your employability score.</p>
+            <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-lg" onclick="window.App.switchView('interview')">Launch Interview Room</button>
+              <button class="btn btn-accent btn-lg" onclick="window.App.openMockTestInNewTab()">🎯 Start Placement Test (New Tab)</button>
+              <button class="btn btn-secondary btn-lg" onclick="window.App.switchView('coding')">Practice Coding Challenges</button>
+            </div>
+          </div>
+          <img src="assets/interview_platform_hero.png" alt="Interview Platform Hero" class="hero-img">
+        </div>
+
+        <!-- Candidate Profile Summary Strip & Hub -->
+        <div class="glass-card profile-hub-card" style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; border-left: 4px solid var(--primary-blue);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;">
+            
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+              <div class="user-avatar profile-avatar-glow" style="width: 54px; height: 54px; font-size: 1.3rem; background: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #ffffff;" id="dash-profile-avatar">JD</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; font-family: var(--font-heading); color: var(--text-main);" id="dash-profile-name">John Doe</h3>
+                  <span class="badge badge-emerald" id="dash-profile-tier">FAANG / Top Tech Target</span>
+                  <span class="badge badge-indigo" id="dash-profile-exp-badge">3-5 Years Exp</span>
+                </div>
+                <p style="margin: 0.3rem 0 0 0; font-size: 0.85rem; color: var(--text-secondary);" id="dash-profile-subtitle">Senior Full Stack Engineer • Target: Tech Lead & Architecture</p>
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="display: flex; flex-direction: column; align-items: flex-end; margin-right: 0.5rem;" title="Profile Completeness Score">
+                <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; color: var(--text-muted); font-weight: 700;">
+                  <span>Profile Strength:</span>
+                  <span style="color: var(--accent-emerald);" id="dash-profile-completeness-text">95%</span>
+                </div>
+                <div style="width: 100px; height: 6px; background: var(--border-light); border-radius: 3px; overflow: hidden; margin-top: 0.25rem;">
+                  <div id="dash-profile-completeness-bar" style="width: 95%; height: 100%; background: var(--accent-emerald); border-radius: 3px; transition: width 0.4s ease;"></div>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="btn-dash-edit-profile">✏️ Edit Profile Settings</button>
+            </div>
+
+          </div>
+
+          <!-- Skills Pills Strip -->
+          <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;" id="dash-profile-skills-pills">
+              <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Active Skills:</span>
+              <span class="badge badge-cyan">React</span>
+              <span class="badge badge-indigo">Node.js</span>
+              <span class="badge badge-amber">Python</span>
+              <span class="badge badge-purple">System Design</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);" id="dash-profile-bio-snippet">
+              💬 <em>"Specialized in high-throughput backend APIs & modern frontend UX."</em>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-indigo">🏆</div>
+            <div class="stat-info">
+              <h3 id="stat-employability-score">84%</h3>
+              <p>Employability Readiness</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-cyan">🎯</div>
+            <div class="stat-info">
+              <h3 id="stat-sessions-completed">12</h3>
+              <p>Mock Sessions Done</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-emerald">💻</div>
+            <div class="stat-info">
+              <h3 id="stat-code-accuracy">92%</h3>
+              <p>Coding Test Accuracy</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-amber">🗣️</div>
+            <div class="stat-info">
+              <h3 id="stat-speech-clarity">135 WPM</h3>
+              <p>Avg Speaking Rate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Two-Column Grid -->
+        <div class="dashboard-grid">
+          
+          <!-- Mock Setup Form -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">⚙️ Configure Custom Interview Session</h2>
+            </div>
+            
+            <form class="setup-form" id="session-setup-form" onsubmit="event.preventDefault(); window.App.startConfiguredInterview();">
+              <div class="form-group">
+                <label for="setup-role">Target Job Role</label>
+                <select id="setup-role" class="form-control">
+                  <option value="fullstack">Full-Stack Software Engineer</option>
+                  <option value="frontend">Frontend React Developer</option>
+                  <option value="backend">Backend Node.js / Python Developer</option>
+                  <option value="aiml">AI / Machine Learning Engineer</option>
+                  <option value="devops">DevOps & Cloud Architect</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Tech Stack & Focus Areas</label>
+                <div class="tag-selector" id="setup-tech-tags">
+                  <span class="tag-item selected" data-tag="React">React</span>
+                  <span class="tag-item selected" data-tag="Node.js">Node.js</span>
+                  <span class="tag-item selected" data-tag="System Design">System Design</span>
+                  <span class="tag-item" data-tag="Python">Python</span>
+                  <span class="tag-item" data-tag="SQL">SQL</span>
+                  <span class="tag-item" data-tag="AWS">AWS</span>
+                  <span class="tag-item" data-tag="Docker">Docker</span>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="setup-round">Interview Round Type</label>
+                  <select id="setup-round" class="form-control">
+                    <option value="technical">Technical Round</option>
+                    <option value="hr">HR & Behavioral (STAR)</option>
+                    <option value="fullstack">Combined Comprehensive</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="setup-experience">Target Seniority</label>
+                  <select id="setup-experience" class="form-control">
+                    <option value="Junior / Entry">Junior / Entry-Level</option>
+                    <option value="Mid-Level" selected>Mid-Level Engineer</option>
+                    <option value="Senior / Lead">Senior / Lead Architect</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="setup-interviewer-persona">AI Interviewer Persona & Voice</label>
+                  <select id="setup-interviewer-persona" class="form-control" style="font-weight: 600;">
+                    <option value="female">👩 Sarah Jenkins (Senior Manager)</option>
+                    <option value="male">👨 David Miller (Principal Architect)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="setup-question-count">Number of Questions</label>
+                  <select id="setup-question-count" class="form-control" style="font-weight: 600;">
+                    <option value="3">3 Questions (Quick Blitz)</option>
+                    <option value="4" selected>4 Questions (Standard Round)</option>
+                    <option value="5">5 Questions (Deep Evaluation)</option>
+                    <option value="7">7 Questions (Comprehensive Assessment)</option>
+                    <option value="10">10 Questions (Marathon Interview)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="setup-resume">Paste Candidate Resume / Key Skills (Optional Context)</label>
+                <textarea id="setup-resume" class="form-control" placeholder="Paste resume bullet points or key project highlights here to customize AI questions..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Generate AI Interview Questions & Begin</button>
+            </form>
+          </div>
+
+          <!-- Radar Chart & Quick Actions -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="glass-card">
+              <div class="card-header">
+                <h2 class="card-title">🕸️ Competency Breakdown</h2>
+              </div>
+              <div style="height: 240px; position: relative;">
+                <canvas id="dashboard-radar-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <h2 class="card-title">📌 Rapid Prep Shortcuts</h2>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <button class="btn btn-secondary" onclick="window.App.switchView('aptitude')" style="justify-content: flex-start;">
+                  <span>🧠 Take 5-Min Aptitude Speed Quiz</span>
+                </button>
+                <button class="btn btn-secondary" onclick="window.App.switchView('coding')" style="justify-content: flex-start;">
+                  <span>💻 Solve Two Sum Coding Challenge</span>
+                </button>
+                <button class="btn btn-secondary" onclick="window.App.switchView('comm')" style="justify-content: flex-start;">
+                  <span>🗣️ Test Speech Filler Word Frequency</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- View 2: Live AI Interview Room -->
+      <section class="view-container" id="view-interview">
+        <div class="interview-room-container">
+          
+          <!-- Stage Area -->
+          <div class="stage-area">
+            
+            <div class="interviewer-stage">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                <!-- Persona Switcher Controls -->
+                <div style="display: flex; gap: 0.4rem; align-items: center; background: var(--bg-subtle); padding: 0.3rem 0.6rem; border-radius: var(--radius-full); border: 1px solid var(--border-light);">
+                  <button class="persona-toggle-btn active" id="btn-persona-female" data-gender="female">👩 Sarah (Female)</button>
+                  <button class="persona-toggle-btn" id="btn-persona-male" data-gender="male">👨 David (Male)</button>
+                  <select id="interviewer-voice-speed" class="form-control" style="padding: 0.15rem 0.4rem; font-size: 0.72rem; width: auto; height: 26px;">
+                    <option value="0.9">0.9x</option>
+                    <option value="1.0" selected>1.0x</option>
+                    <option value="1.1">1.1x</option>
+                  </select>
+                </div>
+
+                <div class="avatar-container">
+                  <img src="assets/female_ai_interviewer_avatar.jpg" alt="AI Interviewer Avatar" class="interviewer-avatar" id="interviewer-avatar-img">
+                  <div class="avatar-pulse" id="avatar-pulse-ring"></div>
+                </div>
+
+                <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary-blue); text-align: center;" id="interviewer-name-title">
+                  👩 Sarah Jenkins • Senior Engineering Manager
+                </div>
+              </div>
+
+              <div class="question-speech-bubble">
+                <span class="question-title-badge" id="interview-question-category">Technical Question 1 of 4</span>
+                <p class="question-text" id="interview-question-text">Click "Start Session" to generate customized AI questions based on your profile.</p>
+              </div>
+            </div>
+
+            <!-- Candidate Controls Bar -->
+            <div class="candidate-controls-bar">
+              
+              <div class="record-btn-wrapper">
+                <button class="btn-mic" id="btn-toggle-mic" title="Click to Speak / Record Voice Answer">
+                  🎙️
+                </button>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.88rem;" id="mic-status-label">Click Mic to Speak Answer</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);" id="speech-timer-label">00:00</div>
+                </div>
+              </div>
+
+              <!-- Audio Waveform Canvas -->
+              <div class="visualizer-box">
+                <canvas id="mic-waveform"></canvas>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm" id="btn-read-question">🔊 Read Question</button>
+                <button class="btn btn-primary btn-sm" id="btn-submit-answer">Submit Answer</button>
+              </div>
+            </div>
+
+            <!-- Response Transcript Textarea -->
+            <div class="glass-card" style="padding: 1rem;">
+              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Speech Transcript / Written Response Box:</label>
+              <textarea class="form-control" id="candidate-transcript-text" rows="3" placeholder="Voice transcription will appear here in real-time, or you can type your answer manually..."></textarea>
+            </div>
+
+          </div>
+
+          <!-- Room Sidebar: Video Preview & Live Feedback -->
+          <div class="room-sidebar">
+            
+            <!-- Webcam Preview Box -->
+            <div class="webcam-preview-box">
+              <video id="webcam-video" autoplay playsinline muted style="display: none;"></video>
+              <div class="webcam-placeholder" id="webcam-placeholder">
+                <span style="font-size: 1.8rem;">📷</span>
+                <span>Click below to toggle camera preview</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-toggle-webcam" style="width: 100%;">Toggle Video Camera</button>
+
+            <!-- Real-Time Feedback Card -->
+            <div class="live-feedback-card">
+              <div class="card-header" style="margin-bottom: 0.4rem;">
+                <h3 class="card-title" style="font-size: 0.92rem;">⚡ Real-Time Evaluation</h3>
+              </div>
+
+              <div class="score-badge-circle" id="score-circle-element" style="--score-pct: 0;">
+                <div class="score-badge-inner" id="live-score-value">--</div>
+              </div>
+
+              <div style="font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.45rem;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Technical Accuracy:</span>
+                  <span style="font-weight: 700;" id="metric-accuracy">--</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Speech Clarity:</span>
+                  <span style="font-weight: 700;" id="metric-clarity">--</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Filler Words Detected:</span>
+                  <span style="font-weight: 700; color: var(--accent-rose);" id="metric-fillers">--</span>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-light); pt-2; margin-top: 0.4rem;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 0.2rem;">Constructive Feedback:</div>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45;" id="live-feedback-text">Submit your response to see detailed AI evaluation.</p>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-light); pt-2; margin-top: 0.4rem;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--accent-emerald); margin-bottom: 0.2rem;">Expert Model Answer:</div>
+                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; max-height: 90px; overflow-y: auto;" id="live-model-answer">--</p>
+              </div>
+
+              <button class="btn btn-accent btn-sm" id="btn-next-question" style="margin-top: auto;">Next Question ➔</button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 3: Coding Sandbox -->
+      <section class="view-container" id="view-coding">
+        <div class="coding-layout">
+          
+          <!-- Problem Statement Left Column -->
+          <div class="problem-statement-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+              <label for="coding-problem-select" style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Select Algorithm Challenge:</label>
+              <select id="coding-problem-select" class="form-control" style="font-weight: 700;">
+                <option value="code-1">1. Two Sum Problem (Arrays & Hash Maps)</option>
+                <option value="code-2">2. Valid Parentheses (Stacks & Strings)</option>
+                <option value="code-3">3. Maximum Subarray (Kadanes DP Algo)</option>
+                <option value="code-4">4. Reverse Linked List / Array (Pointers)</option>
+                <option value="code-5">5. Binary Search (Divide & Conquer)</option>
+                <option value="code-6">6. Best Time to Buy & Sell Stock (Sliding Window)</option>
+                <option value="code-7">7. Valid Anagram (Strings & Hash Table)</option>
+                <option value="code-8">8. Container With Most Water (Two Pointers)</option>
+                <option value="code-9">9. Find Minimum in Rotated Sorted Array (Binary Search)</option>
+                <option value="code-10">10. Climbing Stairs (Dynamic Programming)</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge badge-emerald" id="coding-difficulty-badge">Easy</span>
+              <span class="badge badge-indigo" id="coding-category-badge">Arrays & Hash Maps</span>
+            </div>
+
+            <div style="font-size: 0.88rem; line-height: 1.55; white-space: pre-wrap; color: var(--text-secondary);" id="coding-problem-desc">
+              Select a coding challenge to get started.
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); font-family: var(--font-code); font-size: 0.82rem; border: 1px solid var(--border-medium);">
+              <div style="color: var(--primary-blue); font-weight: 600;">Sample Input / Output:</div>
+              <div id="coding-sample-io" style="margin-top: 0.3rem; color: var(--text-main); line-height: 1.45;">Input: nums = [2,7,11,15], target = 9<br>Output: [0, 1]</div>
+            </div>
+
+            <div id="coding-solution-note-box" style="background: #e0e7ff; border: 1px solid #c7d2fe; border-radius: var(--radius-md); padding: 0.8rem; font-size: 0.82rem; color: #3730a3; display: none;">
+              💡 <strong>Approach Note:</strong> <span id="coding-solution-note-text"></span>
+            </div>
+          </div>
+
+          <!-- Code Editor Right Column -->
+          <div class="editor-wrapper">
+            <div class="editor-toolbar">
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <select id="coding-language-select" class="form-control" style="padding: 0.25rem 0.6rem; font-size: 0.8rem; width: 140px; font-weight: 600;">
+                  <option value="javascript">JavaScript (ES6)</option>
+                  <option value="python">Python 3</option>
+                  <option value="java">Java</option>
+                  <option value="cpp">C++ 17</option>
+                </select>
+              </div>
+
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" id="btn-solution-code" title="Load Reference Solution">💡 Solution</button>
+                <button class="btn btn-secondary btn-sm" id="btn-copy-code" title="Copy Code">📋 Copy</button>
+                <button class="btn btn-secondary btn-sm" id="btn-reset-code">🔄 Reset</button>
+                <button class="btn btn-accent btn-sm" id="btn-run-code">▶ Run Tests</button>
+              </div>
+            </div>
+
+            <textarea id="code-input" spellcheck="false" placeholder="Write your algorithm implementation here..."></textarea>
+
+            <div class="console-output-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <div style="color: #94a3b8; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">TEST EXECUTION CONSOLE:</div>
+                <div style="font-size: 0.75rem; font-family: var(--font-code); color: #38bdf8;" id="coding-status-badge">Ready to Test</div>
+              </div>
+              <div id="coding-console-text" style="font-size: 0.82rem; line-height: 1.45; white-space: pre-wrap;">Click "Run Tests" to evaluate test assertions.</div>
+              
+              <div id="coding-test-cards-container" style="display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.65rem;"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 4: Aptitude Skill Assessment -->
+      <section class="view-container" id="view-aptitude">
+        <div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.35rem;">
+          
+          <!-- Top Header Card -->
+          <div class="glass-card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h2 class="card-title" style="font-size: 1.3rem;">🧠 Aptitude Assessment & Speed Evaluation</h2>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">
+                  Sharpen your problem-solving speed, numerical accuracy, logical reasoning, and technical logic with 25+ practice challenges.
+                </p>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm" id="btn-shuffle-aptitude">🔀 Shuffle Pool</button>
+                <button class="btn btn-rose btn-sm" id="btn-reset-aptitude-score">🔄 Reset Score</button>
+              </div>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div id="aptitude-category-filters" style="display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.85rem; border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
+              <button class="apt-cat-pill active" data-cat="all">All Categories (25)</button>
+              <button class="apt-cat-pill" data-cat="Quantitative Aptitude">🔢 Quantitative (7)</button>
+              <button class="apt-cat-pill" data-cat="Logical Reasoning">🧩 Logical Reasoning (6)</button>
+              <button class="apt-cat-pill" data-cat="Verbal Ability">📖 Verbal Ability (5)</button>
+              <button class="apt-cat-pill" data-cat="Data & Technical Logic">💻 Data & Tech Logic (7)</button>
+            </div>
+          </div>
+
+          <!-- KPI Summary Strip -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;">
+            <div class="glass-card" style="padding: 0.85rem 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Accuracy Score</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-top: 0.15rem;" id="apt-stat-accuracy">0%</div>
+            </div>
+            <div class="glass-card" style="padding: 0.85rem 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Correct / Attempted</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-emerald); margin-top: 0.15rem;" id="apt-stat-score">0 / 0</div>
+            </div>
+            <div class="glass-card" style="padding: 0.85rem 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Current Streak</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-amber); margin-top: 0.15rem;" id="apt-stat-streak">🔥 0</div>
+            </div>
+            <div class="glass-card" style="padding: 0.85rem 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Overall Mastery</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: var(--primary-indigo); margin-top: 0.15rem;" id="apt-stat-mastery">78%</div>
+            </div>
+          </div>
+
+          <!-- Question Assessment Card -->
+          <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.1rem;">
+            
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge badge-cyan" id="aptitude-category-title">Quantitative Aptitude</span>
+                <span class="badge badge-amber" id="aptitude-difficulty-badge">Medium</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="btn-aptitude-hint" style="font-size: 0.78rem;">💡 Show Hint</button>
+            </div>
+
+            <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-main); line-height: 1.55;" id="aptitude-question-text">
+              Question will load here...
+            </div>
+
+            <div id="aptitude-hint-box" style="display: none; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.75rem; font-size: 0.85rem; color: #92400e;">
+              💡 <strong>Hint:</strong> <span id="aptitude-hint-text">Formula hint will appear here.</span>
+            </div>
+
+            <div id="aptitude-options-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <!-- Rendered via JS -->
+            </div>
+
+            <div id="aptitude-explanation-box" class="glass-card" style="display: none; background: #ecfdf5; border-color: var(--accent-emerald);">
+              <div style="font-weight: 700; color: var(--accent-emerald); margin-bottom: 0.3rem; font-size: 0.9rem;">
+                ✅ Step-by-Step Solution & Formula Explanation:
+              </div>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-main);" id="aptitude-explanation-text"></p>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 0.85rem; margin-top: 0.35rem;">
+              <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;" id="aptitude-progress-label">Question 1 of 25</span>
+              <button class="btn btn-primary" id="btn-next-aptitude">Next Aptitude Question ➔</button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 5: Communication & Speech Studio -->
+      <section class="view-container" id="view-comm">
+        <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.35rem;">
+          
+          <div class="glass-card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h2 class="card-title" style="font-size: 1.3rem;">🗣️ Speech & Communication Evaluator</h2>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">
+                  Master vocal delivery, eliminate verbal fillers, and perfect your speech pacing (WPM) using real-time audio analytics and NLP evaluation.
+                </p>
+              </div>
+              <span class="badge badge-cyan" id="comm-status-badge">Ready to Practice</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 360px 1fr; gap: 1.35rem;">
+            
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="comm-prompt-select" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Select Practice Prompt:</label>
+                <select id="comm-prompt-select" class="form-control" style="font-weight: 600;">
+                  <!-- Options rendered via JS -->
+                </select>
+              </div>
+
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                <span class="badge badge-indigo" id="comm-prompt-category-badge">Behavioral Introduction</span>
+                <span class="badge badge-emerald" id="comm-target-wpm-badge">Target Pace: 120-150 WPM</span>
+                <span class="badge badge-amber" id="comm-target-duration-label">Target Length: 45 Seconds</span>
+              </div>
+
+              <div style="background: var(--bg-subtle); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.85rem;">
+                <div style="font-weight: 700; color: var(--primary-blue); font-size: 0.9rem; margin-bottom: 0.3rem;" id="comm-prompt-title">Prompt Title</div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;" id="comm-prompt-desc">Prompt description will load here...</div>
+              </div>
+
+              <div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase;">Recommended STAR Key Points:</div>
+                <div id="comm-prompt-keypoints-container" style="display: flex; flex-wrap: wrap; gap: 0.35rem;"></div>
+              </div>
+            </div>
+
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.1rem;">
+              
+              <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-subtle); padding: 0.75rem 1.1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <div>
+                  <div style="font-size: 1.6rem; font-family: var(--font-code); font-weight: 800; color: var(--primary-blue);" id="comm-timer-display">00:00</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);" id="comm-timer-subtext">Click Record button to begin speech recording</div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                  <button id="btn-comm-mic" class="btn-mic" title="Start / Stop Microphone Recording" style="width: 46px; height: 46px; font-size: 1.2rem;">
+                    🎙️
+                  </button>
+                  <button class="btn btn-secondary btn-sm" id="btn-comm-pause" disabled>⏸️ Pause</button>
+                  <button class="btn btn-rose btn-sm" id="btn-comm-stop" disabled>⏹️ Stop</button>
+                  <button class="btn btn-accent btn-sm" id="btn-comm-evaluate">⚡ Evaluate Speech</button>
+                </div>
+              </div>
+
+              <div style="background: var(--bg-dark); border: 1px solid var(--border-light); border-radius: var(--radius-md); height: 60px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                <canvas id="comm-waveform-canvas" style="width: 100%; height: 100%;"></canvas>
+              </div>
+
+              <div id="comm-audio-player-wrapper" style="display: none; background: var(--bg-subtle); padding: 0.65rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">LISTEN TO RECORDED AUDIO:</div>
+                <audio id="comm-audio-player" controls style="width: 100%; height: 32px;"></audio>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <label for="comm-transcript-input" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Speech Transcript (Live Voice Recognition):</label>
+                  <div style="font-size: 0.72rem; font-family: var(--font-code); color: var(--primary-blue);">
+                    <span id="comm-word-count-label">0 words</span> | <span id="comm-wpm-live-label">0 WPM</span>
+                  </div>
+                </div>
+                <textarea id="comm-transcript-input" class="form-control" rows="3" placeholder="Speak into your microphone or paste your speech transcript here for automated NLP evaluation..." style="font-size: 0.85rem; line-height: 1.45;"></textarea>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;">
+            <div class="glass-card" style="padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Speech Pace (WPM)</div>
+              <div style="font-size: 1.7rem; font-weight: 800; color: var(--primary-blue); margin: 0.25rem 0;" id="comm-kpi-wpm">0 WPM</div>
+              <div style="font-size: 0.74rem; font-weight: 600;" id="comm-wpm-status">Awaiting Evaluation</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Filler Words Count</div>
+              <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-rose); margin: 0.25rem 0;" id="comm-kpi-fillers">0 words</div>
+              <div style="font-size: 0.74rem; font-weight: 600;" id="comm-fillers-status">No Fillers Detected</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">STAR Structure</div>
+              <div style="font-size: 1.7rem; font-weight: 800; color: var(--primary-indigo); margin: 0.25rem 0;" id="comm-kpi-star">0%</div>
+              <div style="font-size: 0.74rem; font-weight: 600;" id="comm-star-status">Coverage Rating</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Vocal Confidence</div>
+              <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-emerald); margin: 0.25rem 0;" id="comm-kpi-confidence">0%</div>
+              <div style="font-size: 0.74rem; font-weight: 600;" id="comm-confidence-status">Posture Rating</div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.35rem;">
+            
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 0.65rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="card-title" style="font-size: 0.95rem;">⏱️ Speech Pacing Gauge</h3>
+                <span style="font-size: 0.75rem; font-family: var(--font-code); color: var(--primary-blue);" id="comm-pace-label-text">Target: 135 WPM</span>
+              </div>
+              
+              <div style="position: relative; height: 14px; background: var(--bg-subtle); border-radius: 7px; overflow: hidden; margin: 0.4rem 0;">
+                <div style="position: absolute; left: 0; width: 33%; height: 100%; background: #fef3c7;" title="Too Slow (< 110 WPM)"></div>
+                <div style="position: absolute; left: 33%; width: 34%; height: 100%; background: #d1fae5;" title="Optimal (110 - 155 WPM)"></div>
+                <div style="position: absolute; left: 67%; width: 33%; height: 100%; background: #fee2e2;" title="Too Fast (> 155 WPM)"></div>
+                
+                <div id="comm-pace-needle" style="position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: var(--text-main); transition: left 0.4s ease;"></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted);">
+                <span>Slow (< 110 WPM)</span>
+                <span style="color: var(--accent-emerald); font-weight: 700;">Optimal (110 - 155 WPM)</span>
+                <span>Fast (> 155 WPM)</span>
+              </div>
+            </div>
+
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 0.65rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="card-title" style="font-size: 0.95rem;">🔍 Verbal Fillers & Heatmap</h3>
+                <span class="badge badge-rose" id="comm-fillers-count-pill">0 Fillers Detected</span>
+              </div>
+
+              <div id="comm-fillers-highlight-box" style="background: var(--bg-subtle); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.65rem; font-size: 0.82rem; line-height: 1.5; max-height: 75px; overflow-y: auto; color: var(--text-secondary);">
+                Transcript analysis will highlight verbal filler words (e.g. <mark class="filler-highlight">um</mark>, <mark class="filler-highlight">basically</mark>, <mark class="filler-highlight">like</mark>) in yellow.
+              </div>
+
+              <div id="comm-fillers-tags-container" style="display: flex; flex-wrap: wrap; gap: 0.3rem;"></div>
+            </div>
+
+          </div>
+
+          <div style="display: grid; grid-template-columns: 400px 1fr; gap: 1.35rem;">
+            
+            <div class="glass-card">
+              <h3 class="card-title" style="font-size: 0.95rem; margin-bottom: 0.65rem;">🎯 Fluency & Delivery Radar</h3>
+              <div style="height: 230px; position: relative;">
+                <canvas id="comm-fluency-radar-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 0.95rem; color: var(--primary-blue); margin-bottom: 0.25rem;">💡 Constructive Delivery Feedback</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;" id="comm-eval-feedback-text">
+                  Complete a speech practice recording above to receive personalized NLP recommendations on vocal pace, pause control, and structural clarity.
+                </p>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-light); padding-top: 0.65rem;">
+                <h3 class="card-title" style="font-size: 0.9rem; color: var(--accent-emerald); margin-bottom: 0.25rem;">✨ Model Answer Reference Script</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; max-height: 90px; overflow-y: auto;" id="comm-eval-model-text">
+                  Model response script will be generated here based on your selected prompt.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="glass-card" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h3 class="card-title" style="font-size: 1rem;">📈 Speech Practice History Log</h3>
+              <button class="btn btn-secondary btn-sm" id="btn-clear-speech-history">Clear Log</button>
+            </div>
+
+            <div id="comm-history-list" style="display: flex; flex-direction: column; gap: 0.55rem;">
+              <p style="color: var(--text-muted); font-size: 0.82rem;">No recent speech practice runs recorded yet. Complete a speech evaluation above to track your progress over time!</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 6: Comprehensive Analytics Report -->
+      <section class="view-container" id="view-reports">
+        <div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.35rem;">
+          
+          <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800;">Candidate Employability Assessment Report</h2>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Generated on real-time evaluation of Technical, Coding, Aptitude, and HR sessions.</p>
+            </div>
+            <button class="btn btn-accent btn-lg" id="btn-export-pdf" onclick="window.print()">📥 Export PDF Report Card</button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.35rem;">
+            <div class="glass-card">
+              <h3 class="card-title" style="margin-bottom: 0.85rem;">📊 Category Mastery</h3>
+              <div style="height: 240px;">
+                <canvas id="report-bar-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="card-title" style="margin-bottom: 0.85rem;">💡 Recommended Focus Areas</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                <div style="padding: 0.75rem 0.85rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md);">
+                  <div style="font-weight: 700; color: var(--primary-blue); font-size: 0.85rem;">1. System Design & Distributed Caching</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.2rem;">Practice Cache-Aside patterns and Redis invalidation scenarios to improve high-level tech depth.</div>
+                </div>
+
+                <div style="padding: 0.75rem 0.85rem; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md);">
+                  <div style="font-weight: 700; color: var(--accent-emerald); font-size: 0.85rem;">2. Code Time Complexity Optimization</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.2rem;">Consistently identify O(N) linear time space-time trade-offs using hash maps over nested loops.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 7: AI Engineering Teacher -->
+      <section class="view-container" id="view-ai-teacher">
+        <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.35rem;">
+          
+          <!-- Hero Banner -->
+          <div class="glass-card ai-teacher-hero">
+            <div class="ai-hero-header">
+              <div class="ai-hero-badge">🤖 AI ENGINEERING TEACHER</div>
+              <h2>Learn Difficult Topics Easily</h2>
+              <p>Interactive, visual, audio-enabled AI teaching sessions tailored for engineering students. Select a subject and topic below to start your personalized lesson!</p>
+            </div>
+          </div>
+
+          <!-- Setup Card / Form -->
+          <div class="glass-card ai-teacher-setup-card" id="ai-teacher-setup-card">
+            <h3 class="card-title" style="margin-bottom: 1.1rem;">🚀 Configure Your Teaching Session</h3>
+            <form id="ai-teacher-setup-form" onsubmit="event.preventDefault(); window.AITeacherEngine.startSession();">
+              <div class="ai-setup-grid">
+                
+                <div class="form-group">
+                  <label for="ai-select-subject">Subject</label>
+                  <select id="ai-select-subject" class="form-control">
+                    <option value="Data Structures" selected>Data Structures</option>
+                    <option value="C Programming">C Programming</option>
+                    <option value="C++">C++</option>
+                    <option value="DBMS">DBMS (Database Systems)</option>
+                    <option value="Operating Systems">Operating Systems</option>
+                    <option value="Computer Networks">Computer Networks</option>
+                    <option value="Computer Organization">Computer Organization & Architecture</option>
+                    <option value="Engineering Mathematics">Engineering Mathematics</option>
+                    <option value="Engineering Physics">Engineering Physics</option>
+                    <option value="Engineering Mechanics">Engineering Mechanics</option>
+                    <option value="Custom">Custom Engineering Subject...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="ai-select-topic">Topic</label>
+                  <select id="ai-select-topic" class="form-control">
+                    <option value="Fast Transpose of Sparse Matrix" selected>Fast Transpose of Sparse Matrix</option>
+                  </select>
+                  <input type="text" id="ai-custom-topic-input" class="form-control" style="display: none; margin-top: 0.4rem;" placeholder="Type any custom topic (e.g., Fast Transpose, Page Replacement, B-Trees)">
+                </div>
+
+                <div class="form-group">
+                  <label for="ai-select-level">Learning Level</label>
+                  <select id="ai-select-level" class="form-control">
+                    <option value="Beginner" selected>Beginner (Simple Analogies & Step-by-Step)</option>
+                    <option value="Intermediate">Intermediate (Core Logic & Trade-offs)</option>
+                    <option value="Advanced">Advanced (Deep Dive & Math Rigor)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="ai-select-style">Teaching Style</label>
+                  <select id="ai-select-style" class="form-control">
+                    <option value="Interactive" selected>Interactive (Visual + Analogies + Checkpoints)</option>
+                    <option value="Step-by-Step">Step-by-Step (Algorithm & Code Highlights)</option>
+                    <option value="Visual & Intuitive">Visual & Intuitive (Diagrams & Grid Animations)</option>
+                    <option value="Formula & Code Focused">Formula & Code Focused (MathJax + Code)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="ai-select-language">Teaching Language</label>
+                  <select id="ai-select-language" class="form-control">
+                    <option value="English" selected>English</option>
+                    <option value="Hindi">Hindi (हिंदी)</option>
+                    <option value="Marathi">Marathi (मराठी)</option>
+                    <option value="Hinglish">Hinglish (Hindi + English)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="ai-select-voice">AI Teacher Voice</label>
+                  <select id="ai-select-voice" class="form-control">
+                    <option value="female_sweet" selected>👩 Female — Sweet & Friendly</option>
+                    <option value="female_calm">👩 Female — Calm Teacher</option>
+                    <option value="male_friendly">👨 Male — Friendly Teacher</option>
+                    <option value="default">🔊 System Default</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 1.1rem;">
+                <button type="submit" class="btn btn-primary btn-lg" id="btn-start-ai-session">
+                  <span>🎬 START AI SESSION</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Active AI Session Container -->
+          <div id="ai-teacher-session-card" style="display: none; flex-direction: column; gap: 1.35rem;">
+            
+            <div class="glass-card ai-avatar-banner">
+              <div style="display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;">
+                <div class="ai-avatar-wrapper">
+                  <div class="ai-avatar-badge" id="ai-avatar-icon">👩‍🏫</div>
+                  <div class="ai-avatar-pulse"></div>
+                </div>
+                
+                <div style="flex: 1; min-width: 240px;">
+                  <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                    <span class="badge badge-cyan" id="ai-session-subject-badge">Data Structures</span>
+                    <span class="badge badge-indigo" id="ai-session-level-badge">Beginner</span>
+                    <span class="badge badge-emerald" id="ai-session-style-badge">Interactive</span>
+                    <span class="badge badge-purple" id="ai-session-language-badge">English</span>
+                    <span class="badge badge-amber" id="ai-session-voice-badge">👩 Female — Sweet</span>
+                  </div>
+                  <h2 id="ai-session-topic-title" style="margin-top: 0.3rem; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Topic: Stack</h2>
+                  <p id="ai-session-intro-text" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;"></p>
+                  <div id="ai-voice-status-notice" style="display: none; font-size: 0.75rem; color: var(--accent-amber); margin-top: 0.25rem;">ℹ️ Using closest available voice for this language.</div>
+                </div>
+              </div>
+
+              <div class="ai-audio-controls">
+                <div class="audio-btn-group" style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                  <button class="btn btn-primary btn-sm" id="btn-ai-play-voice" onclick="window.AITeacherEngine.playVoice()">▶ Play</button>
+                  <button class="btn btn-secondary btn-sm" id="btn-ai-pause-voice" onclick="window.AITeacherEngine.pauseVoice()">⏸ Pause</button>
+                  <button class="btn btn-secondary btn-sm" id="btn-ai-stop-voice" onclick="window.AITeacherEngine.stopVoice()">⏹ Stop</button>
+                  <button class="btn btn-secondary btn-sm" id="btn-ai-toggle-voice" onclick="window.AITeacherEngine.toggleMute()">🔊 Voice</button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--text-muted);">
+                  <label for="ai-voice-speed">Speed:</label>
+                  <select id="ai-voice-speed" class="form-control form-control-sm" style="width: auto; padding: 0.15rem 0.4rem;" onchange="window.AITeacherEngine.setSpeed(this.value)">
+                    <option value="0.85">0.85x</option>
+                    <option value="1.0" selected>1.0x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Captions -->
+            <div class="glass-card ai-captions-strip" id="ai-captions-container" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.1rem; border-left: 4px solid var(--primary-blue);">
+              <div style="display: flex; align-items: center; gap: 0.35rem; font-weight: 800; font-size: 0.78rem; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">
+                <span>📝 Live Captions:</span>
+              </div>
+              <div id="ai-captions-text" style="font-size: 0.88rem; font-weight: 500; color: var(--text-main); line-height: 1.45; flex: 1;">
+                Select a topic and click "START AI SESSION" to begin the live audio narration.
+              </div>
+              <div class="ai-equalizer" id="ai-audio-equalizer">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <!-- Lesson Progress Bar -->
+            <div class="glass-card" style="padding: 0.85rem 1.1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 0.82rem; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-secondary);">Lesson Progress:</span>
+                <span id="ai-progress-text" style="color: var(--primary-blue);">25% (Section 1 of 4)</span>
+              </div>
+              <div class="progress-bar-bg" style="height: 8px; background: var(--bg-subtle); border-radius: 4px; overflow: hidden;">
+                <div id="ai-progress-bar" style="width: 25%; height: 100%; background: var(--primary-blue); border-radius: 4px; transition: width 0.4s ease;"></div>
+              </div>
+            </div>
+
+            <!-- Current Lesson Section Card -->
+            <div class="glass-card ai-lesson-section-card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.65rem;">
+                <h3 id="ai-section-title" style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--primary-blue);">Current Lesson</h3>
+                <span class="badge badge-purple" id="ai-section-badge">Section 1</span>
+              </div>
+
+              <div id="ai-section-explanation" class="ai-text-content" style="font-size: 0.92rem; line-height: 1.6; color: var(--text-main); margin-bottom: 1.1rem;"></div>
+
+              <div id="ai-analogy-box" class="ai-analogy-callout" style="margin-bottom: 1.1rem; padding: 0.85rem 1rem; background: #fffbeb; border-left: 4px solid #d97706; border-radius: var(--radius-sm);">
+                <div style="font-weight: 700; color: #b45309; font-size: 0.85rem; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.25rem;">
+                  <span>💡 Real-World & Engineering Analogy</span>
+                </div>
+                <p id="ai-analogy-text" style="font-size: 0.85rem; color: #78350f; margin: 0;"></p>
+              </div>
+
+              <div class="ai-visual-container" style="margin-top: 1.1rem; margin-bottom: 1.1rem;">
+                <div class="ai-visual-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem;">
+                  <span style="font-weight: 700; font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">🎨 Visual & Interactive Graphic</span>
+                  <span id="ai-visual-type-label" class="badge badge-cyan">Matrix Animation</span>
+                </div>
+                
+                <div id="ai-visual-canvas" class="ai-visual-canvas" style="padding: 1.1rem; background: var(--bg-subtle); border: 1px solid var(--border-medium); border-radius: var(--radius-md); min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                  <!-- Dynamic graphic injected here -->
+                </div>
+              </div>
+
+              <div id="ai-checkpoint-box" class="glass-card" style="margin-top: 1.1rem; background: #eff6ff; border: 1px solid #bfdbfe; display: none; padding: 0.85rem 1rem;">
+                <div style="font-weight: 700; color: var(--primary-blue); font-size: 0.85rem; margin-bottom: 0.4rem;">🎯 Section Checkpoint Question</div>
+                <p id="ai-checkpoint-question" style="font-size: 0.88rem; font-weight: 600; margin-bottom: 0.65rem; color: var(--text-main);"></p>
+                <div id="ai-checkpoint-options" style="display: flex; flex-direction: column; gap: 0.45rem;"></div>
+                <div id="ai-checkpoint-feedback" style="margin-top: 0.65rem; font-size: 0.85rem; font-weight: 600; display: none;"></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; padding-top: 0.85rem; border-top: 1px solid var(--border-light);">
+                <button class="btn btn-secondary" id="btn-ai-prev-sec" onclick="window.AITeacherEngine.prevSection()">⬅️ Previous</button>
+                <div style="font-size: 0.82rem; color: var(--text-muted);" id="ai-sec-counter-text">Section 1 of 4</div>
+                <button class="btn btn-primary" id="btn-ai-next-sec" onclick="window.AITeacherEngine.nextSection()">Next ➡️</button>
+              </div>
+
+            </div>
+
+            <!-- Doubts QA Section -->
+            <div class="glass-card ai-doubts-card">
+              <h3 class="card-title" style="font-size: 1.05rem; margin-bottom: 0.4rem;">💬 ASK YOUR AI TEACHER</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.85rem;">Have a doubt about this topic or step? Ask below for an instant student-friendly explanation!</p>
+
+              <div style="display: flex; gap: 0.65rem; margin-bottom: 0.85rem;">
+                <input type="text" id="input-ai-question" class="form-control" placeholder="Type your question here... (e.g. Why is fast transpose faster than simple transpose?)">
+                <button class="btn btn-accent" id="btn-ask-ai-teacher" onclick="window.AITeacherEngine.askQuestion()">Ask Teacher</button>
+              </div>
+
+              <div id="ai-doubts-history" style="display: flex; flex-direction: column; gap: 0.65rem;"></div>
+            </div>
+
+            <!-- Quick Quiz Section -->
+            <div class="glass-card ai-quiz-card" id="ai-quick-quiz-card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.65rem;">
+                <div>
+                  <h3 class="card-title" style="font-size: 1.05rem;">🧠 QUICK QUIZ</h3>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem;">Test your understanding of the topic with multiple-choice questions.</p>
+                </div>
+                <span class="badge badge-emerald" id="ai-quiz-score-badge" style="display: none;">Score: 0/5</span>
+              </div>
+
+              <div id="ai-quiz-container" style="display: flex; flex-direction: column; gap: 1.1rem;">
+                <!-- Quiz questions dynamically rendered -->
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 1.1rem;">
+                <button class="btn btn-primary btn-lg" id="btn-submit-ai-quiz" onclick="window.AITeacherEngine.submitQuiz()">[ Submit Answer ]</button>
+              </div>
+
+              <div id="ai-quiz-feedback-banner" class="glass-card" style="display: none; margin-top: 0.85rem; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 1rem;">
+                <h4 id="ai-quiz-result-title" style="color: #047857; font-family: var(--font-heading); margin-bottom: 0.25rem;">Score: 4/5</h4>
+                <p id="ai-quiz-result-feedback" style="font-size: 0.85rem; color: var(--text-main); margin: 0;"></p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- View 8: Integrated Placement Drive Mock Test -->
+      <section class="view-container" id="view-mock-test">
+        <div style="max-width: 1050px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.35rem;">
+          
+          <!-- Hero Banner & Control Bar -->
+          <div class="glass-card" style="padding: 1.25rem 1.5rem; border-left: 5px solid var(--primary-blue);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+                  <h2 style="margin: 0; font-size: 1.4rem; font-weight: 800; font-family: var(--font-heading); color: var(--text-main);">
+                    🎯 Full Placement Drive Mock Test
+                  </h2>
+                  <span class="badge badge-emerald" id="mock-test-status-badge">Ready to Start</span>
+                </div>
+                <p style="margin: 0.35rem 0 0 0; font-size: 0.85rem; color: var(--text-secondary);">
+                  Single unified mock assessment: Test <strong>1. Aptitude MCQs</strong> ➔ <strong>2. Algorithm Coding</strong> ➔ <strong>3. AI Technical & HR Interview</strong> under realistic placement drive conditions.
+                </p>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.6rem; background: var(--bg-subtle); padding: 0.5rem 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--border-medium);">
+                  <span style="font-size: 1.2rem;">⏱️</span>
+                  <div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Timer</div>
+                    <div style="font-size: 1.2rem; font-family: var(--font-code); font-weight: 800; color: var(--primary-blue);" id="mock-timer-display">25:00</div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-md" id="btn-start-mock-test">▶ Start Full Test</button>
+                <button class="btn btn-secondary btn-md" id="btn-toggle-fullscreen" onclick="window.App.toggleFullscreenMode()">🖥️ Fullscreen Focus</button>
+                <button class="btn btn-secondary btn-md" id="btn-open-mock-new-tab" onclick="window.App.openMockTestInNewTab()">↗️ Open in New Tab</button>
+                <button class="btn btn-secondary btn-md" id="btn-reset-mock-test" style="display: none;">🔄 Restart Test</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI WEBCAM PROCTORING & EYE TRACKING ANTI-CHEATING BAR -->
+          <div class="glass-card mock-proctor-card" style="padding: 0.85rem 1.25rem; border-left: 4px solid var(--accent-amber);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              
+              <div style="display: flex; align-items: center; gap: 0.85rem;">
+                <!-- Camera Box with Live Reticle Overlay Canvas -->
+                <div style="width: 84px; height: 58px; background: #000; border-radius: var(--radius-sm); overflow: hidden; position: relative; border: 2px solid var(--border-medium);" id="mock-proctor-video-box">
+                  <video id="mock-proctor-video" autoplay playsinline muted style="width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);"></video>
+                  <canvas id="mock-proctor-overlay-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transform: scaleX(-1);"></canvas>
+                  <canvas id="mock-proctor-canvas" style="display: none;"></canvas>
+                  <div id="mock-proctor-video-overlay" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #94a3b8; text-align: center; background: rgba(15,23,42,0.88);">
+                    Cam Off
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+                    <span style="font-size: 0.9rem; font-weight: 800; color: var(--text-main);">👁️ High-Precision AI Gaze & Face Proctor</span>
+                    <span class="badge badge-amber" id="mock-proctor-status-badge">Camera Standby</span>
+                    <span class="badge badge-cyan" id="mock-proctor-gaze-direction">Gaze: Unknown</span>
+                  </div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">
+                    Optical spatial tracking detects Left/Right/Up/Down gaze drift, face absence, or tab switching.
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <div style="display: flex; flex-direction: column; gap: 0.15rem;">
+                  <label for="mock-proctor-sensitivity" style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Sensitivity</label>
+                  <select id="mock-proctor-sensitivity" class="form-control" style="padding: 0.15rem 0.4rem; font-size: 0.76rem; width: auto; height: 26px;">
+                    <option value="strict" selected>⚡ Strict Placement (0.8s)</option>
+                    <option value="normal">⚖️ Standard (1.5s)</option>
+                  </select>
+                </div>
+
+                <div style="text-align: right;">
+                  <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Flags</div>
+                  <div style="font-size: 1.15rem; font-family: var(--font-code); font-weight: 800; color: var(--accent-rose);" id="mock-proctor-warning-count">
+                    0 Flags
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-toggle-mock-proctor">📷 Turn On Webcam Proctor</button>
+              </div>
+
+            </div>
+
+            <!-- Floating Warning Alert Banner -->
+            <div id="mock-proctor-alert-banner" class="glass-card" style="display: none; margin-top: 0.75rem; background: #fef2f2; border: 1.5px solid #ef4444; padding: 0.65rem 1rem; border-radius: var(--radius-md);">
+              <div style="display: flex; align-items: center; gap: 0.6rem; color: #dc2626; font-weight: 800; font-size: 0.88rem;">
+                <span>⚠️ ANTI-CHEATING WARNING:</span>
+                <span id="mock-proctor-alert-text">Off-screen eye movement detected! Please keep your eyes focused on the test.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Header -->
+          <div class="glass-card" style="padding: 0.85rem 1.25rem;">
+            <div class="mock-stepper-container">
+              
+              <div class="mock-step-item active" id="mock-step-1-btn">
+                <div class="mock-step-num">1</div>
+                <div class="mock-step-info">
+                  <span class="mock-step-title">Stage 1: Aptitude</span>
+                  <span class="mock-step-sub" id="mock-step-1-status">10 Speed MCQs</span>
+                </div>
+              </div>
+              
+              <div class="mock-step-line" id="mock-line-1"></div>
+
+              <div class="mock-step-item" id="mock-step-2-btn">
+                <div class="mock-step-num">2</div>
+                <div class="mock-step-info">
+                  <span class="mock-step-title">Stage 2: Coding</span>
+                  <span class="mock-step-sub" id="mock-step-2-status">Algorithm Suite</span>
+                </div>
+              </div>
+
+              <div class="mock-step-line" id="mock-line-2"></div>
+
+              <div class="mock-step-item" id="mock-step-3-btn">
+                <div class="mock-step-num">3</div>
+                <div class="mock-step-info">
+                  <span class="mock-step-title">Stage 3: AI Interview</span>
+                  <span class="mock-step-sub" id="mock-step-3-status">4 Viva Questions</span>
+                </div>
+              </div>
+
+              <div class="mock-step-line" id="mock-line-3"></div>
+
+              <div class="mock-step-item" id="mock-step-4-btn">
+                <div class="mock-step-num">🏆</div>
+                <div class="mock-step-info">
+                  <span class="mock-step-title">Stage 4: Scorecard</span>
+                  <span class="mock-step-sub" id="mock-step-4-status">Placement Diagnostic</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- STAGE 1: APTITUDE TEST -->
+          <div class="mock-stage-box active" id="mock-stage-1">
+            <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 0.85rem;">
+                <div>
+                  <span class="badge badge-cyan" id="mock-apt-cat-badge">Quantitative & Logic</span>
+                  <h3 style="margin: 0.3rem 0 0 0; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">Section 1: Aptitude Speed & Logic Assessment (10 Questions)</h3>
+                </div>
+                <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;" id="mock-apt-pills-container">
+                  <!-- Rendered via JS: 1..10 -->
+                </div>
+              </div>
+
+              <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-main); line-height: 1.55;" id="mock-apt-question-text">
+                Click "Start Full Test" to begin Stage 1.
+              </div>
+
+              <div id="mock-apt-options-container" style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <!-- Options rendered via JS -->
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 0.85rem; margin-top: 0.35rem;">
+                <button class="btn btn-secondary btn-sm" id="btn-mock-apt-prev">⬅ Previous</button>
+                <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;" id="mock-apt-progress-text">Question 1 of 10</span>
+                <button class="btn btn-secondary btn-sm" id="btn-mock-apt-next">Next ➔</button>
+                <button class="btn btn-accent btn-md" id="btn-mock-apt-submit">Complete Stage 1: Aptitude ➔</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 2: CODING TEST -->
+          <div class="mock-stage-box" id="mock-stage-2" style="display: none;">
+            <div class="coding-layout" style="grid-template-columns: 360px 1fr;">
+              <div class="problem-statement-card">
+                <div style="margin-bottom: 0.5rem;">
+                  <label for="mock-code-problem-select" style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Select Challenge:</label>
+                  <select id="mock-code-problem-select" class="form-control" style="font-weight: 700; margin-top: 0.2rem;">
+                    <option value="code-1">1. Two Sum Problem (Arrays & Maps)</option>
+                    <option value="code-2">2. Valid Parentheses (Stacks)</option>
+                    <option value="code-3">3. Maximum Subarray (Kadane DP)</option>
+                    <option value="code-5">4. Binary Search (O(log N))</option>
+                    <option value="code-10">5. Climbing Stairs (DP)</option>
+                  </select>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="badge badge-emerald" id="mock-code-diff-badge">Easy</span>
+                  <span class="badge badge-indigo" id="mock-code-cat-badge">Arrays & Maps</span>
+                </div>
+                <h3 style="margin: 0.4rem 0 0 0; font-size: 1.15rem; font-weight: 700; color: var(--text-main);" id="mock-code-title">Two Sum Challenge</h3>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;" id="mock-code-desc">
+                  Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+                </p>
+
+                <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); font-family: var(--font-code); font-size: 0.82rem; border: 1px solid var(--border-medium);">
+                  <div style="color: var(--primary-blue); font-weight: 600;">Sample Input / Output:</div>
+                  <div id="mock-code-sample-io" style="margin-top: 0.3rem; color: var(--text-main);">Input: nums = [2,7,11,15], target = 9<br>Output: [0, 1]</div>
+                </div>
+              </div>
+
+              <div class="editor-wrapper">
+                <div class="editor-toolbar">
+                  <select id="mock-code-lang-select" class="form-control" style="padding: 0.25rem 0.6rem; font-size: 0.8rem; width: 140px; font-weight: 600;">
+                    <option value="javascript">JavaScript (ES6)</option>
+                    <option value="python">Python 3</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++ 17</option>
+                  </select>
+
+                  <div style="display: flex; gap: 0.4rem;">
+                    <button class="btn btn-secondary btn-sm" id="btn-mock-code-sol">💡 Solution</button>
+                    <button class="btn btn-secondary btn-sm" id="btn-mock-code-reset">🔄 Reset</button>
+                    <button class="btn btn-accent btn-sm" id="btn-mock-code-run">▶ Run Test Suite</button>
+                  </div>
+                </div>
+
+                <textarea id="mock-code-input" spellcheck="false" placeholder="Write algorithm solution here..."></textarea>
+
+                <div class="console-output-box">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                    <div style="color: #94a3b8; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">TEST CONSOLE OUTPUT:</div>
+                    <div style="font-size: 0.75rem; font-family: var(--font-code); color: #38bdf8;" id="mock-code-status">Ready</div>
+                  </div>
+                  <div id="mock-code-console-text" style="font-size: 0.82rem; white-space: pre-wrap;">Click "Run Test Suite" to execute test cases.</div>
+                  <div id="mock-code-test-pills" style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem;"></div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 0.85rem;">
+                  <button class="btn btn-primary btn-md" id="btn-mock-code-submit">Complete Stage 2: Coding ➔</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 3: AI INTERVIEW ROOM -->
+          <div class="mock-stage-box" id="mock-stage-3" style="display: none;">
+            <div class="interview-room-container">
+              <div class="stage-area">
+                <div class="interviewer-stage">
+                  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+                    <div class="avatar-container">
+                      <img src="assets/female_ai_interviewer_avatar.jpg" alt="AI Interviewer Avatar" class="interviewer-avatar" id="mock-interviewer-avatar">
+                      <div class="avatar-pulse"></div>
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary-blue);" id="mock-interviewer-name">
+                      👩 Sarah Jenkins • Placement Panel Lead
+                    </div>
+                  </div>
+
+                  <div class="question-speech-bubble">
+                    <span class="question-title-badge" id="mock-interview-q-badge">Technical & HR Question 1 of 4</span>
+                    <p class="question-text" id="mock-interview-q-text">Interview question will load here...</p>
+                  </div>
+                </div>
+
+                <div class="candidate-controls-bar">
+                  <div class="record-btn-wrapper">
+                    <button class="btn-mic" id="btn-mock-mic" title="Click to Speak">🎙️</button>
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.88rem;" id="mock-mic-label">Click Mic to Speak Answer</div>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);" id="mock-mic-timer">00:00</div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-sm" id="btn-mock-tts">🔊 Read Question</button>
+                    <button class="btn btn-primary btn-sm" id="btn-mock-submit-ans">Submit Answer</button>
+                  </div>
+                </div>
+
+                <div class="glass-card" style="padding: 1rem;">
+                  <textarea class="form-control" id="mock-interview-transcript" rows="3" placeholder="Voice transcription will appear here, or type your answer manually..."></textarea>
+                </div>
+              </div>
+
+              <div class="room-sidebar">
+                <div class="live-feedback-card">
+                  <div class="card-header"><h3 class="card-title" style="font-size: 0.92rem;">⚡ Live AI Evaluation</h3></div>
+                  
+                  <div class="score-badge-circle" id="mock-score-circle" style="--score-pct: 0;">
+                    <div class="score-badge-inner" id="mock-score-val">--</div>
+                  </div>
+
+                  <div style="font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.45rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span style="color: var(--text-muted);">Technical Accuracy:</span>
+                      <span style="font-weight: 700;" id="mock-metric-acc">--</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span style="color: var(--text-muted);">Speech Pace:</span>
+                      <span style="font-weight: 700;" id="mock-metric-wpm">--</span>
+                    </div>
+                  </div>
+
+                  <div style="border-top: 1px solid var(--border-light); pt-2; margin-top: 0.4rem;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: var(--primary-blue);">Constructive Feedback:</div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);" id="mock-feedback-text">Submit answer to see evaluation.</p>
+                  </div>
+
+                  <button class="btn btn-accent btn-sm" id="btn-mock-finish-test" style="margin-top: auto;">Finish Test & View Scorecard 🏆</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 4: REAL DIAGNOSTIC REPORT CARD -->
+          <div class="mock-stage-box" id="mock-stage-4" style="display: none;">
+            <div style="display: flex; flex-direction: column; gap: 1.35rem;">
+              
+              <!-- Report Banner -->
+              <div class="glass-card" style="padding: 1.5rem; text-align: center; border-top: 5px solid var(--accent-emerald);">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                  <span class="badge badge-emerald" style="font-size: 0.85rem; padding: 0.35rem 0.85rem;">OFFICIAL REAL PLACEMENT DIAGNOSTIC REPORT</span>
+                  <span class="badge badge-indigo" id="mock-final-proctor-badge">Integrity: 100% Clean</span>
+                </div>
+                <h2 style="font-size: 1.8rem; font-family: var(--font-heading); font-weight: 800; color: var(--text-main); margin: 0.2rem 0;" id="mock-final-readiness-label">
+                  Employability Readiness Index: 88%
+                </h2>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 680px; margin: 0.4rem auto 0 auto;" id="mock-final-verdict-desc">
+                  Real evaluation generated from your actual Aptitude submissions, algorithm test suite execution, and AI Interview voice responses.
+                </p>
+              </div>
+
+              <!-- 3 Core Metric Cards -->
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+                <div class="glass-card" style="padding: 1.25rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--primary-blue);">
+                    <span>🧠 Stage 1: Aptitude</span>
+                  </div>
+                  <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;" id="mock-scorecard-apt-score">
+                    0 / 5 (0%)
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);" id="mock-scorecard-apt-sub">Real MCQ Accuracy</div>
+                </div>
+
+                <div class="glass-card" style="padding: 1.25rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--accent-emerald);">
+                    <span>💻 Stage 2: Coding</span>
+                  </div>
+                  <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;" id="mock-scorecard-code-score">
+                    0%
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);" id="mock-scorecard-code-sub">Actual Test Cases Passed</div>
+                </div>
+
+                <div class="glass-card" style="padding: 1.25rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; font-weight: 700; color: var(--primary-indigo);">
+                    <span>🎙️ Stage 3: AI Interview</span>
+                  </div>
+                  <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0.4rem 0;" id="mock-scorecard-interview-score">
+                    0 / 100
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);" id="mock-scorecard-interview-sub">Real Technical Viva Score</div>
+                </div>
+              </div>
+
+              <!-- REAL DETAILED ITEMIZATION REPORT -->
+              <div class="glass-card" style="padding: 1.35rem; display: flex; flex-direction: column; gap: 1rem;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                  📋 Real Itemized Diagnostic Audit
+                </h3>
+
+                <!-- Aptitude Question-by-Question Real Breakdown -->
+                <div>
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 0.5rem;">
+                    1. Aptitude MCQs Itemized Analysis:
+                  </h4>
+                  <div id="mock-report-apt-items" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <!-- Dynamically populated real itemized breakdown -->
+                  </div>
+                </div>
+
+                <!-- Coding Real Performance Diagnostic -->
+                <div style="border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--accent-emerald); margin-bottom: 0.4rem;">
+                    2. Algorithm Code Execution Diagnostic:
+                  </h4>
+                  <div id="mock-report-code-detail" style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.85rem; line-height: 1.5;">
+                    <!-- Real code performance breakdown -->
+                  </div>
+                </div>
+
+                <!-- AI Interview Real Response Audit -->
+                <div style="border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--primary-indigo); margin-bottom: 0.4rem;">
+                    3. AI Interview Speech & Technical Viva Audit:
+                  </h4>
+                  <div id="mock-report-interview-detail" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <!-- Real interview response breakdown -->
+                  </div>
+                </div>
+
+                <!-- Anti-Cheating Integrity Log -->
+                <div style="border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--accent-rose); margin-bottom: 0.4rem;">
+                    4. Eye-Tracking & Proctoring Security Audit:
+                  </h4>
+                  <div id="mock-report-proctor-log" style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary);">
+                    No integrity anomalies detected.
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Action Row -->
+              <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem;">
+                <button class="btn btn-primary btn-lg" id="btn-mock-restart-final">🔄 Retake Placement Test</button>
+                <button class="btn btn-accent btn-lg" onclick="window.print()">📥 Export PDF Report Card</button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal: Gemini API Key Config -->
+  <div class="modal-overlay" id="modal-api-key">
+    <div class="modal-box">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">🔑 Configure Gemini API Key</h3>
+        <button class="btn btn-secondary btn-sm" id="btn-close-api-modal">✕</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 1.1rem;">
+        Provide your Google Gemini API Key to enable real-time Gemini LLM question generation and detailed prompt responses. If left empty, the built-in Intelligent Evaluation Engine will be used.
+      </p>
+      
+      <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label for="input-gemini-key">Gemini API Key</label>
+        <input type="password" id="input-gemini-key" class="form-control" placeholder="AIzaSy...">
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.65rem;">
+        <button class="btn btn-secondary" id="btn-clear-api-key">Clear Key</button>
+        <button class="btn btn-primary" id="btn-save-api-key">Save & Activate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Screen Color & Theme Customizer -->
+  <div class="modal-overlay" id="modal-theme">
+    <div class="modal-box" style="max-width: 560px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+          <span>🎨 Appearance & Theme Customizer</span>
+        </h3>
+        <button class="btn btn-secondary btn-sm" id="btn-close-theme-modal">✕</button>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 1.1rem;">
+        Personalize your screen color, background hues, accent themes, or select a pre-designed preset.
+      </p>
+      
+      <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.65rem;">
+        Curated Color Presets
+      </div>
+      
+      <!-- Preset Swatches Grid -->
+      <div class="theme-preset-grid">
+        <div class="theme-preset-card active" data-preset="midnight">
+          <div class="theme-swatch-preview" style="background: #090d16; color: #ffffff; border: 1px solid #2563eb;">
+            <span>🌌</span>
+          </div>
+          <span class="theme-preset-name">Midnight Dark</span>
+        </div>
+
+        <div class="theme-preset-card" data-preset="obsidian">
+          <div class="theme-swatch-preview" style="background: #050811; color: #ffffff; border: 1px solid #7c3aed;">
+            <span>🌃</span>
+          </div>
+          <span class="theme-preset-name">Obsidian Black</span>
+        </div>
+
+        <div class="theme-preset-card" data-preset="cyberpunk">
+          <div class="theme-swatch-preview" style="background: #02131e; color: #ffffff; border: 1px solid #0284c7;">
+            <span>🌊</span>
+          </div>
+          <span class="theme-preset-name">Cyber Ocean</span>
+        </div>
+
+        <div class="theme-preset-card" data-preset="purple">
+          <div class="theme-swatch-preview" style="background: #110a21; color: #ffffff; border: 1px solid #a855f7;">
+            <span>🔮</span>
+          </div>
+          <span class="theme-preset-name">Velvet Dusk</span>
+        </div>
+
+        <div class="theme-preset-card" data-preset="emerald">
+          <div class="theme-swatch-preview" style="background: #051914; color: #ffffff; border: 1px solid #059669;">
+            <span>🌲</span>
+          </div>
+          <span class="theme-preset-name">Emerald Slate</span>
+        </div>
+
+        <div class="theme-preset-card" data-preset="light">
+          <div class="theme-swatch-preview" style="background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1;">
+            <span>☀️</span>
+          </div>
+          <span class="theme-preset-name">Arctic Light</span>
+        </div>
+      </div>
+
+      <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.65rem;">
+        Fine-Tune Custom Screen Colors
+      </div>
+
+      <div class="color-picker-section">
+        <div class="color-picker-row">
+          <label class="color-picker-label" for="theme-color-bg">
+            <span>🖼️ Canvas Background Color</span>
+          </label>
+          <input type="color" id="theme-color-bg" class="color-input-custom" value="#f8fafc">
+        </div>
+
+        <div class="color-picker-row">
+          <label class="color-picker-label" for="theme-color-glow1">
+            <span>✨ Primary Accent Color</span>
+          </label>
+          <input type="color" id="theme-color-glow1" class="color-input-custom" value="#2563eb">
+        </div>
+
+        <div class="color-picker-row">
+          <label class="color-picker-label" for="theme-color-glow2">
+            <span>💡 Secondary Accent Color</span>
+          </label>
+          <input type="color" id="theme-color-glow2" class="color-input-custom" value="#0284c7">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-secondary btn-sm" id="btn-reset-theme">🔄 Reset Default</button>
+        <div style="display: flex; gap: 0.65rem;">
+          <button class="btn btn-secondary" id="btn-cancel-theme">Cancel</button>
+          <button class="btn btn-primary" id="btn-save-theme">Save & Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Candidate Profile Manager -->
+  <div class="modal-overlay" id="modal-candidate-profile">
+    <div class="modal-box" style="max-width: 620px; max-height: 88vh; overflow-y: auto;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem;">
+          <span>👤 Candidate Profile & Skills Manager</span>
+        </h3>
+        <button class="btn btn-secondary btn-sm" id="btn-close-profile-modal">✕</button>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 1.1rem;">
+        Customize your candidate profile, target career track, experience tier, and key tech stack skills. AI Interview question generators will dynamically tailor questions to your background.
+      </p>
+
+      <form id="form-candidate-profile" onsubmit="event.preventDefault();">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.1rem;">
+          <div class="form-group">
+            <label for="input-profile-name">Full Name</label>
+            <input type="text" id="input-profile-name" class="form-control" value="John Doe" placeholder="e.g. Alex Johnson" required>
+          </div>
+          <div class="form-group">
+            <label for="input-profile-headline">Professional Headline</label>
+            <input type="text" id="input-profile-headline" class="form-control" value="Senior Full Stack Engineer" placeholder="e.g. AI & Backend Architect">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.85rem; margin-bottom: 1.1rem;">
+          <div class="form-group">
+            <label for="select-profile-role">Target Job Role</label>
+            <select id="select-profile-role" class="form-control">
+              <option value="Senior Full Stack Engineer">Full Stack Engineer</option>
+              <option value="Frontend Lead Developer">Frontend Engineer</option>
+              <option value="Backend Systems Engineer">Backend Developer</option>
+              <option value="AI / ML Engineer">AI / ML Engineer</option>
+              <option value="DevOps & Cloud Architect">DevOps / Cloud</option>
+              <option value="Product Manager">Product Manager</option>
+              <option value="System Architect">System Architect</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="select-profile-exp">Experience Level</label>
+            <select id="select-profile-exp" class="form-control">
+              <option value="Entry Level (0-2 Yrs)">Entry Level (0-2 Yrs)</option>
+              <option value="Mid Level (3-5 Yrs)" selected>Mid Level (3-5 Yrs)</option>
+              <option value="Senior (5-8 Yrs)">Senior (5-8 Yrs)</option>
+              <option value="Staff / Lead (8+ Yrs)">Staff / Lead (8+ Yrs)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="select-profile-tier">Target Industry / Tier</label>
+            <select id="select-profile-tier" class="form-control">
+              <option value="FAANG / Top Tech Target" selected>FAANG / Big Tech</option>
+              <option value="High-Growth Unicorn">High-Growth Unicorn</option>
+              <option value="FinTech & Quant Trading">FinTech / Quant</option>
+              <option value="Early-Stage AI Startup">AI Startup</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.1rem;">
+          <label>Avatar Visual Theme</label>
+          <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+            <div class="user-avatar" id="profile-avatar-preview" style="width: 44px; height: 44px; font-size: 1rem; background: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #ffffff;">JD</div>
+            <div style="display: flex; gap: 0.45rem;" id="avatar-gradient-swatches">
+              <div class="avatar-swatch active" data-gradient="linear-gradient(135deg, #2563eb, #0284c7)" style="background: linear-gradient(135deg, #2563eb, #0284c7);"></div>
+              <div class="avatar-swatch" data-gradient="linear-gradient(135deg, #7c3aed, #db2777)" style="background: linear-gradient(135deg, #7c3aed, #db2777);"></div>
+              <div class="avatar-swatch" data-gradient="linear-gradient(135deg, #059669, #0284c7)" style="background: linear-gradient(135deg, #059669, #0284c7);"></div>
+              <div class="avatar-swatch" data-gradient="linear-gradient(135deg, #d97706, #dc2626)" style="background: linear-gradient(135deg, #d97706, #dc2626);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.1rem;">
+          <label>Tech Stack & Key Skills (Click to toggle active skills)</label>
+          <div id="profile-skills-matrix" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem;">
+            <!-- Tech Pills populated dynamically in JS -->
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="input-profile-bio">Resume / Technical Experience Bio</label>
+          <textarea id="input-profile-bio" class="form-control" rows="3" placeholder="Paste key accomplishments, main tech stack summary, or resume bio highlights for AI context..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.65rem;">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-profile">Cancel</button>
+          <button type="button" class="btn btn-primary" id="btn-save-profile">💾 Save Profile Settings</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Engine & Controller Scripts -->
+  <script src="interview-engine.js"></script>
+  <script src="ai-teacher-engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
